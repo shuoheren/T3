@@ -14,11 +14,14 @@ public class TicTacToe extends JFrame implements ActionListener {
     // Labels for displaying the leaderboard
     private JLabel playerXLabel;
     private JLabel playerOLabel;
+    
+    // Start Over button
+    private JButton startOverButton;
 
     public TicTacToe() {
         // Set up the JFrame
         setTitle("Tic-Tac-Toe Game");
-        setSize(400, 500);
+        setSize(400, 550);  // Adjusted height to fit Start Over button
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -51,11 +54,17 @@ public class TicTacToe extends JFrame implements ActionListener {
 
         // Initialize the leaderboard
         JPanel leaderboardPanel = new JPanel();
-        leaderboardPanel.setLayout(new GridLayout(2, 1));
+        leaderboardPanel.setLayout(new GridLayout(3, 1));  // Adjusted for 3 rows
         playerXLabel = new JLabel(playerXName + " (" + playerXChar + "): " + playerXWins + " Wins");
         playerOLabel = new JLabel(playerOName + " (" + playerOChar + "): " + playerOWins + " Wins");
         leaderboardPanel.add(playerXLabel);
         leaderboardPanel.add(playerOLabel);
+
+        // Add "Start Over" button to reset the game
+        startOverButton = new JButton("Start Over");
+        startOverButton.setFont(new Font("Arial", Font.BOLD, 20));
+        startOverButton.addActionListener(e -> resetGame());
+        leaderboardPanel.add(startOverButton);  // Add the button to the leaderboard panel
 
         // Add the game panel and leaderboard panel to the frame
         add(gamePanel, BorderLayout.CENTER);
@@ -152,7 +161,16 @@ public class TicTacToe extends JFrame implements ActionListener {
                 buttons[row][col].setText("");
             }
         }
-        playerXTurn = true;  // Player X starts the next game
+         // Player X starts the next game
+    }
+
+    private void resetGame() {
+        // Resets the game completely, including scores and the board
+        resetBoard();
+        playerXWins = 0;
+        playerOWins = 0;
+        playerXLabel.setText(playerXName + " (" + playerXChar + "): " + playerXWins + " Wins");
+        playerOLabel.setText(playerOName + " (" + playerOChar + "): " + playerOWins + " Wins");
     }
 
     public static void main(String[] args) {
